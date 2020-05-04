@@ -4,6 +4,13 @@ import java.util.*
 import kotlin.collections.HashMap
 import kotlin.collections.MutableList
 import kotlin.collections.set
+import kotlin.math.sqrt
+
+fun main() {
+    SquareDecomposer().decomposeNumber(7654321)?.forEach {
+        print("$it ")
+    }
+}
 
 class SquareDecomposer {
     val map = HashMap<Int, Long>()
@@ -18,9 +25,9 @@ class SquareDecomposer {
             val square = i * i.toLong()
             map[i] = square
             i++
-        } while (i <= number)
+        } while (i <= sqrt(number.toDouble()))
 
-        return decomposer(number, map[number] ?: 0L)?.dropLast(1)?.toTypedArray()
+        return decomposer(number, number * number.toLong())?.dropLast(1)?.toTypedArray()
     }
 
     private fun decomposer(n: Int, remain: Long): MutableList<Int>? {
@@ -33,8 +40,8 @@ class SquareDecomposer {
 
         // iterate all element less than n
         for (i in n - 1 downTo 1) {
-            if (remain - (map[i] ?: 0L) >= 0) {
-                val r = decomposer(i, remain - (map[i] ?: 0L))
+            if (remain - (map[i] ?: i * i.toLong()) >= 0) {
+                val r = decomposer(i, remain - (map[i] ?: i * i.toLong()))
 
                 // only get the answer
                 if (r != null) {
