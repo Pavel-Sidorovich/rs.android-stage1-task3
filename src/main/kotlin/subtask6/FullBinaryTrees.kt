@@ -56,23 +56,23 @@ class FullBinaryTrees {
 
     private fun allPossibleFBT(N: Int): List<TreeNode?> {
         if (!memo.containsKey(N)) {
-            val ans: MutableList<TreeNode?> = LinkedList<TreeNode?>()
+            val root: MutableList<TreeNode?> = LinkedList<TreeNode?>()
             if (N == 1) {
-                ans.add(TreeNode(0))
+                root.add(TreeNode(0))
             } else if (N % 2 == 1) {
-                for (x in 0 until N) {
+                for (x in 1 until N) {
                     val y = N - 1 - x
                     for (left in allPossibleFBT(x)) {
                         for (right in allPossibleFBT(y)) {
-                            val bns = TreeNode(0)
-                            bns.left = left
-                            bns.right = right
-                            ans.add(bns)
+                            val tree = TreeNode(0)
+                            tree.left = left
+                            tree.right = right
+                            root.add(tree)
                         }
                     }
                 }
             }
-            memo[N] = ans
+            memo[N] = root
         }
         return memo[N] ?: arrayListOf()
     }
